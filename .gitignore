@@ -1,0 +1,8 @@
+.env
+.Config.ini
+__pycache__
+.idea
+.pytest_cache
+.vscode
+.project
+dist
