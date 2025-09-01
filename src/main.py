@@ -1,4 +1,5 @@
 from lc_samples import lang_default
+from lc_samples import lang_prompt
 
 def start():
-    lang_default.llm_test()
+    lang_prompt.llm_test()
