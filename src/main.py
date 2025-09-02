@@ -1,6 +1,8 @@
-from lc_samples import lang_default
-from lc_samples import lang_prompt
+# from lc_samples import lang_default
+# from lc_samples import lang_prompt
+# from lc_samples import lang_partial
+from lc_samples import lang_parser
 
 
 def start():
-    lang_prompt.llm_chat_few_prompt_fix_dyn()
+    lang_parser.llm_parser_json()
