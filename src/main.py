@@ -8,4 +8,4 @@ from rag_samples import load_docs
 
 
 def start():
-    load_docs.load_pdfs()
+    load_docs.load_txts()
