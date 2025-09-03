@@ -1,4 +1,10 @@
-from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader, UnstructuredPDFLoader
+from langchain_community.document_loaders import (DirectoryLoader, 
+                                                  TextLoader,
+                                                  PyPDFLoader,
+                                                  UnstructuredPDFLoader,
+                                                  PyMuPDFLoader,
+                                                  PyPDFDirectoryLoader,
+                                                  OnlinePDFLoader)
 from langchain_community.document_loaders.csv_loader import CSVLoader
 
 
@@ -8,8 +14,8 @@ def load_txts():
     data = loader.load()
         
     print('load_txts', data[0])
-    
-    
+
+
 def load_csvs():
     loader = CSVLoader(
         file_path='./src/static/test.csv',
@@ -18,18 +24,25 @@ def load_csvs():
     )
     
     data = loader.load()
-    
+    data = loader.load()
+
     print('load_csvs', data[0])
 
 
 def load_pdfs():
-    pdf_filepath = './src/static/sk.pdf'
-    loader = UnstructuredPDFLoader(
-        pdf_filepath,
-        strategy="ocr_only",          # OCR 강제 사용
-        languages=["kor"]          # Tesseract 언어 설정
-    )
+    # pdf_filepath = './src/static/sk.pdf'
+    
+    # loader = UnstructuredPDFLoader(
+    #     pdf_filepath,
+    #     strategy="ocr_only",
+    #     languages=["kor"],
+    #     mode='elements'
+    # )
+    
+    # loader = PyMuPDFLoader(pdf_filepath)
+    
+    loader = OnlinePDFLoader("https://arxiv.org/pdf/1706.03762.pdf")
 
     pages = loader.load()
-   
-    print('pages', pages)
+       
+    print('pages', pages[0].page_content)
