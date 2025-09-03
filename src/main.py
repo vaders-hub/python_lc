@@ -7,4 +7,4 @@ from rag_samples import load_data
 
 
 def start():
-    load_data.load_web_data()
+    load_data.load_web()

@@ -1,12 +1,12 @@
 import os
-import asyncio
+# import asyncio
 from dotenv import load_dotenv
-
-load_dotenv()
 
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.schema.output_parser import StrOutputParser
+
+load_dotenv()
 
 # prompt + model + output parser
 prompt = ChatPromptTemplate.from_template("지구과학에서 {topic}에 대해 간단히 설명해주세요.")
