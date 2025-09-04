@@ -10,18 +10,17 @@ from langchain_text_splitters import CharacterTextSplitter
 
 
 def load_txts():
-    text_splitter = CharacterTextSplitter(
-        separator='',
-        chunk_size=500,
-        chunk_overlap=100,
-        length_function=len,
+    text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
+        chunk_size=600,
+        chunk_overlap=200,
+        encoding_name='cl100k_base'
     )
     loader = DirectoryLoader(path='./src/static', glob='*.txt', loader_cls=TextLoader)
     
     data = loader.load()
-    texts = text_splitter.split_text(data[0].page_content)
+    texts = text_splitter.split_documents(data)
         
-    print('split_texts', texts[0])
+    print('split_texts', texts[1].page_content)
 
 
 def load_csvs():
