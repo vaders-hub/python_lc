@@ -10,4 +10,4 @@ from rag_samples import vector
 
 
 def start():
-    vector.test_vector_pdf()
+    vector.test_faiss_vector_pdf()
