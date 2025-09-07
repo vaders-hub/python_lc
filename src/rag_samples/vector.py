@@ -1,15 +1,17 @@
 import os
 from dotenv import load_dotenv
+import logging
 
 from langchain_openai import ChatOpenAI
 
+from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_community.document_loaders import TextLoader, PyMuPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 
 from langchain_community.vectorstores import Chroma
-
 from langchain_community.vectorstores import FAISS
+
 from langchain_community.vectorstores.utils import DistanceStrategy
 from langchain_huggingface import HuggingFaceEmbeddings
 
@@ -157,3 +159,24 @@ def test_generation():
     response = chain.invoke({"context": (format_docs(docs)), "question": query})
 
     print(response)
+
+
+def test_multi():
+    loader = PyMuPDFLoader("./src/static/kakao.pdf")
+    data = loader.load()
+    text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+        chunk_size=1000, chunk_overlap=200, encoding_name="cl100k_base"
+    )
+    docs = text_splitter.split_documents(data)
+
+    questions = ["카카오뱅크의 최근 영업실적을 알려줘.", "카카오뱅크의 환경목표와 세부추진내용을 알려줘"]
+
+    vectorstore = FAISS.from_documents(docs, embedding=embeddings_model, distance_strategy=DistanceStrategy.COSINE)
+    retriever = vectorstore.as_retriever()
+
+    logging.basicConfig()
+    logging.getLogger("langchain.retrievers.multi_query").setLevel(logging.INFO)
+
+    unique_docs = retriever.batch(questions)
+
+    print("multi ::::: ", unique_docs[1])

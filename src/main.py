@@ -10,4 +10,4 @@ from rag_samples import vector
 
 
 def start():
-    vector.test_generation()
+    vector.test_multi()
